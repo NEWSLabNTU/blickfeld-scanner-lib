@@ -1,0 +1,11 @@
+diff --git a/python/CMakeLists.txt b/python/CMakeLists.txt
+index 65b8d20..8c4cd64 100644
+--- a/python/CMakeLists.txt
++++ b/python/CMakeLists.txt
+@@ -52,5 +52,5 @@ if(Python_Interpreter_FOUND)
+ 
+     add_custom_target(blickfeld-scanner-python ALL DEPENDS ${OUTPUT})
+ 
+-    install(CODE "execute_process(WORKING_DIRECTORY \"${CMAKE_CURRENT_BINARY_DIR}\" COMMAND ${Python_EXECUTABLE} ${SETUP_PY} install)")
++    install(CODE "execute_process(WORKING_DIRECTORY \"${CMAKE_CURRENT_BINARY_DIR}\" COMMAND ${Python_EXECUTABLE} ${SETUP_PY} install --prefix=\$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX})")
+ endif()

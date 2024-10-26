@@ -1,0 +1,35 @@
+# Maintainer: Lin, Hsiang-Jui <jerry73204@gmail.com>
+pkgname=blickfeld-scanner-lib
+pkgver=2.20.6
+pkgrel=1
+pkgdesc='The blickfeld-scanner-lib (BSL) is the interface for communicating with Blickfeld LiDAR devices.'
+arch=(amd64 arm64)
+depends=(libprotobuf23 python3-ifaddr)
+makedepends=(git build-essential libprotobuf-dev libprotoc-dev protobuf-compiler python3-setuptools)
+license=('BSD-3')
+url='https://github.com/Blickfeld/blickfeld-scanner-lib'
+source=(
+    'blickfeld-scanner-lib::git+https://github.com/Blickfeld/blickfeld-scanner-lib.git#tag=v2.20.6'
+    'fix_python_install_dir.patch'
+)
+sha256sums=(
+    'SKIP'
+    '84c6c03d8161ee03b55c9d4fdbf1eae779e371ba9e9c8b8ead1d16c923456b3c'
+)
+
+prepare() {
+    cd "${srcdir}/blickfeld-scanner-lib"
+    git submodule update --init --recursive
+    git apply < "${srcdir}/fix_python_install_dir.patch"
+}
+
+build() {
+    cd "${srcdir}/blickfeld-scanner-lib"
+    cmake -S . -B build -DCMAKE_INSTALL_PREFIX=/usr
+    cmake --build build --parallel
+}
+
+package() {
+    cd "${srcdir}/blickfeld-scanner-lib"
+    DESTDIR="${pkgdir}" cmake --install build
+}
