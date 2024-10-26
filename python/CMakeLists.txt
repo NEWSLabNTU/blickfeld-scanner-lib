@@ -52,5 +52,5 @@ if(Python_Interpreter_FOUND)
 
     add_custom_target(blickfeld-scanner-python ALL DEPENDS ${OUTPUT})
 
-    install(CODE "execute_process(WORKING_DIRECTORY \"${CMAKE_CURRENT_BINARY_DIR}\" COMMAND ${Python_EXECUTABLE} ${SETUP_PY} install)")
+    install(CODE "execute_process(WORKING_DIRECTORY \"${CMAKE_CURRENT_BINARY_DIR}\" COMMAND ${Python_EXECUTABLE} ${SETUP_PY} install --prefix=\$ENV{DESTDIR}/${CMAKE_INSTALL_PREFIX})")
 endif()
